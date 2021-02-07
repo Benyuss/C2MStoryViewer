@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity(),
         )
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = currentPage
-        viewPager.orientation=ViewPager2.ORIENTATION_VERTICAL
         viewPager.setPageTransformer(CubeOutTransformer())
         viewPager.registerOnPageChangeCallback(object : PageChangeListener() {
             override fun onPageSelected(position: Int) {
