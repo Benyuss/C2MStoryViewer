@@ -12,7 +12,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.bumptech.glide.Glide
 import com.c2m.storyviewer.R
 import com.c2m.storyviewer.app.StoryApp
-import com.c2m.storyviewer.customview.StoryPagerAdapter
+import com.c2m.storyviewer.customview.StoryPager2Adapter
 import com.c2m.storyviewer.data.StoryUser
 import com.c2m.storyviewer.utils.CubeOutTransformer
 import com.c2m.storyviewer.utils.StoryGenerator
@@ -28,7 +28,7 @@ import kotlinx.coroutines.async
 class MainActivity : AppCompatActivity(),
     PageViewOperator {
 
-    private lateinit var pagerAdapter: StoryPagerAdapter
+    private lateinit var pagerAdapter: StoryPager2Adapter
     private var currentPage: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun nextPageView() {
-        if (viewPager.currentItem + 1 < viewPager.adapter?.count ?: 0) {
+        if (viewPager.currentItem + 1 < viewPager.adapter?.itemCount ?: 0) {
             try {
                 fakeDrag(true)
             } catch (e: Exception) {
@@ -64,24 +64,21 @@ class MainActivity : AppCompatActivity(),
         val storyUserList = StoryGenerator.generateStories()
         preLoadStories(storyUserList)
 
-        pagerAdapter = StoryPagerAdapter(
-            supportFragmentManager,
+        pagerAdapter = StoryPager2Adapter(
+            this,
             storyUserList
         )
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = currentPage
-        viewPager.setPageTransformer(
-            true,
-            CubeOutTransformer()
-        )
-        viewPager.addOnPageChangeListener(object : PageChangeListener() {
+        viewPager.setPageTransformer(CubeOutTransformer())
+        viewPager.registerOnPageChangeCallback(object : PageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
             }
 
-            override fun onPageScrollCanceled() {
-                currentFragment()?.resumeCurrentStory()
+            override fun onPageScrollCanceled(position: Int) {
+                currentFragment(position).resumeCurrentStory()
             }
         })
     }
@@ -143,8 +140,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun currentFragment(): StoryDisplayFragment? {
-        return pagerAdapter.findFragmentByPosition(viewPager, currentPage) as StoryDisplayFragment
+    private fun currentFragment(position: Int): StoryDisplayFragment {
+        return pagerAdapter.fragmentsMap[viewPager.currentItem] as StoryDisplayFragment
     }
 
     /**

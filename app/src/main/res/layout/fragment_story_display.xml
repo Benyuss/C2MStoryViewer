@@ -24,7 +24,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/storyDisplayImage"
+        app:layout_constraintEnd_toEndOf="@+id/storyDisplayImage"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
