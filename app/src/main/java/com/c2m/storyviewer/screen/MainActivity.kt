@@ -141,7 +141,8 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun currentFragment(position: Int): StoryDisplayFragment {
-        return pagerAdapter.fragmentsMap[viewPager.currentItem] as StoryDisplayFragment
+        //return pagerAdapter.fragmentsMap[viewPager.currentItem] as StoryDisplayFragment
+        return pagerAdapter.fragmentsMap[position] as StoryDisplayFragment
     }
 
     /**
