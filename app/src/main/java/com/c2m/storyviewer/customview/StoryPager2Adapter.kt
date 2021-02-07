@@ -10,7 +10,6 @@ class StoryPager2Adapter constructor(
     fragmentManager: AppCompatActivity,
     private val storyList: ArrayList<StoryUser>
 ) : FragmentStateAdapter(fragmentManager) {
-    //private val fragments: MutableList<Fragment> = mutableListOf()
 
     val fragmentsMap: HashMap<Int, Fragment> = HashMap()
     override fun getItemCount(): Int {
@@ -19,7 +18,6 @@ class StoryPager2Adapter constructor(
 
     override fun createFragment(position: Int): Fragment {
         val fragment = StoryDisplayFragment.newInstance(position, storyList[position])
-        //fragments.add(fragment)
         fragmentsMap[position] = fragment
         return fragment
     }
