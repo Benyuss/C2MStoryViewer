@@ -9,6 +9,7 @@ import android.util.SparseIntArray
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.c2m.storyviewer.R
 import com.c2m.storyviewer.app.StoryApp
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(),
         )
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = currentPage
+        viewPager.orientation=ViewPager2.ORIENTATION_VERTICAL
         viewPager.setPageTransformer(CubeOutTransformer())
         viewPager.registerOnPageChangeCallback(object : PageChangeListener() {
             override fun onPageSelected(position: Int) {
